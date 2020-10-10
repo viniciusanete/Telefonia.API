@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Telefonia.Infrastructure.Data\Telefonia.Infrastructure.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
 </Project>
