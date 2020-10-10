@@ -20,5 +20,15 @@ namespace Telefonia.Domain.Plano
         /// <param name="frm">Parametros com os dados completos do plano</param>
         /// <returns>Dados do plano inserido</returns>
         Task<Form> Update(Form frm);
+        
+        /// <summary>
+        /// Método de listagem de planos telefonicos
+        /// </summary>
+        /// <param name="DDD">DDD do plano, campo obrigatório para a busca</param>
+        /// <param name="tipoPlanoId">Tipo do plano, campo opcional</param>
+        /// <param name="operadoraId">Operadora do plano, campo opcional</param>
+        /// <param name="planoId">Identificador do plano, campo opcional</param>
+        /// <returns></returns>
+        Task<List<List>> List(int? DDD, int? tipoPlanoId, int? operadoraId, int? planoId);
     }
 }

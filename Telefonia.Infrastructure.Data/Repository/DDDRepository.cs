@@ -18,5 +18,12 @@ namespace Telefonia.Infrastructure.Data.Repository
             
             return Context.QueryFirstOrDefault<DDD>(sql, frm);
         }
+
+        public IEnumerable<DDD> ListByPlano(Filter filter)
+        {
+            var sql = @"SELECT Id, Codigo, Descricao FROM DDD D INNER JOIN PlanoDDD PD ON D.Id = PD.DDDId WHERE PD.PlanoId = @PlanoId";
+
+            return Context.Query<DDD>(sql, filter);
+        }
     }
 }

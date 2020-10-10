@@ -30,5 +30,12 @@ namespace Telefonia.Host.Controllers.V1
         {
             return Ok(await _planoService.Update(form));
         }
+
+        [HttpGet]
+        [Route("list")]
+        public async Task<IActionResult> List([FromQuery]int? DDD, [FromQuery] int? tipoPlanoId, [FromQuery] int? operadoraId, [FromQuery] int? planoId)
+        {
+            return Ok(await _planoService.List(DDD, tipoPlanoId, operadoraId, planoId));
+        }
     }
 }

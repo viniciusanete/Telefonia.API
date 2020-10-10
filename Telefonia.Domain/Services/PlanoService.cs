@@ -168,5 +168,55 @@ namespace Telefonia.Domain.Services
                 throw ex;
             }
         }
+
+        public async Task<List<Plano.List>> List(int? DDD, int? tipoPlanoId, int? operadoraId, int? planoId)
+        {
+            try
+            {
+                if (DDD == null)
+                    throw new Exception("DDD é um campo obrigatório para realizar a busca");
+
+                var dddValido = _dDDRepository.GetByDDD(new DDD.DDD() { Codigo = (int)DDD });
+
+                if (dddValido == null)
+                    throw new Exception($"DDD {DDD} inválido. Informe um campo de DDD válido");
+
+                var planos = _planoRepository.List(new Plano.Filter()
+                {
+                    DDD = dddValido.Id,
+                    TipoPlanoId = tipoPlanoId,
+                    OperadoraId = operadoraId,
+                    PlanoId = planoId
+                });
+
+                var result = new List<Plano.List>();
+
+                foreach (var plano in planos)
+                {
+                    var item = new Plano.List();
+                    item.Id = plano.Id;
+                    item.Minutos = plano.Minutos;
+                    item.FranquiaInternet = plano.FranquiaInternet;
+                    item.Valor = plano.Valor;
+                    item.TipoPlanoId = plano.TipoPlanoId;
+                    item.OperadoraId = plano.OperadoraId;
+                    item.StatusRegistro = plano.StatusRegistro;
+
+                    item.DDD = _dDDRepository.ListByPlano(new Domain.DDD.Filter()
+                    {
+                        PlanoId = plano.Id
+                    }).ToList();
+
+                    result.Add(item);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "PlanoService - List");
+                throw ex;
+            }
+        }
     }
 }
