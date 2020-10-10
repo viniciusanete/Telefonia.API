@@ -59,6 +59,11 @@ namespace Telefonia.Host
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseExceptionHandler(new ExceptionHandlerOptions
+            {
+                ExceptionHandler = new Middleware.JsonExceptionMiddleware(env).Invoke
+            });
+
             app.UseHealthChecks("/hc", new HealthCheckOptions()
             {
                 Predicate = _ => true,

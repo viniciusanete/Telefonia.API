@@ -17,6 +17,10 @@ namespace Telefonia.Host.Infrastructure.ExtensionMethods
 
             services.AddScoped<Telefonia.Context.Context.IContext, Telefonia.Context.Context.Context>();
 
+            /*Logger*/
+            services.AddTransient<Microsoft.Extensions.Logging.ILogger, Middleware.Logger>();
+            /*Logger*/
+
             return services;
         }
     }
