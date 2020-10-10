@@ -70,6 +70,8 @@ namespace Telefonia.Host
                 Predicate = r => r.Name.Contains("self")
             });
 
+            Telefonia.Infrastructure.Data.Repository.RegisterMappings.Register();
+
             app.UseCors("CorsPolicy");
             app.UseRouting();
 

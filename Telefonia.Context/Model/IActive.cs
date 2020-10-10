@@ -6,6 +6,6 @@ namespace Telefonia.Context.Model
 {
     public interface IActive
     {
-        StatusRegister StatusRegister { get; set; }
+        StatusRegister StatusRegistro { get; set; }
     }
 }
