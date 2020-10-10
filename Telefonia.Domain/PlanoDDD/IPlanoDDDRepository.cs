@@ -9,5 +9,7 @@ namespace Telefonia.Domain.PlanoDDD
     {
         IContext Context { get; }
         PlanoDDD Insert(PlanoDDD itm);
+        IEnumerable<PlanoDDD> ListByPlano(PlanoDDD itm);
+        void Delete(PlanoDDD itm);
     }
 }

@@ -24,5 +24,11 @@ namespace Telefonia.Host.Controllers.V1
             return Ok(await _planoService.Insert(form));
         }
 
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> Update([FromBody] Form form)
+        {
+            return Ok(await _planoService.Update(form));
+        }
     }
 }

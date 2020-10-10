@@ -22,5 +22,17 @@ namespace Telefonia.Infrastructure.Data.Repository
 
             return itm;
         }
+
+        public IEnumerable<PlanoDDD> ListByPlano(PlanoDDD itm)
+        {
+            var sql = @"SELECT PlanoId, DDDId FROM PlanoDDD WHERE PlanoId = @PlanoId";
+            return Context.Query<PlanoDDD>(sql, itm);
+        }
+
+        public void Delete(PlanoDDD itm)
+        {
+            var sql = "DELETE FROM PlanoDDD WHERE PlanoId = @PlanoId AND DDDId = @DDDId";
+            Context.ExecuteNonQuery(sql, itm);
+        }
     }
 }

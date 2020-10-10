@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telefonia.Domain.DDD;
@@ -56,7 +57,7 @@ namespace Telefonia.Domain.Services
 
                 foreach (var ddd in frm.DDD)
                 {
-                    var item = _dDDRepository.GetByDDD(new DDD.DDD() { Codigo = ddd});
+                    var item = _dDDRepository.GetByDDD(new DDD.DDD() { Codigo = ddd });
 
                     if (item == null)
                         throw new Exception($"DDD {ddd} inválido. Informar um código de área válido para cadastrar um plano");
@@ -67,13 +68,14 @@ namespace Telefonia.Domain.Services
                 frm.StatusRegistro = Context.Model.StatusRegister.Active;
 
                 var plano = _planoRepository.Insert(frm);
+                frm.Id = plano.Id;
 
                 foreach (var item in dddValido)
                 {
                     _planoDDDRepository.Insert(new PlanoDDD.PlanoDDD()
                     {
                         DDDId = item.Id,
-                        PlanoId = plano.Id
+                        PlanoId = frm.Id
                     });
                 }
 
@@ -83,11 +85,88 @@ namespace Telefonia.Domain.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "PlanoService - Post");
+                _logger.LogError(ex, "PlanoService - Insert");
                 _context.RollBack();
                 throw ex;
             }
+        }
 
+        public async Task<Form> Update(Form frm)
+        {
+            try
+            {
+                _context.BeginTransaction();
+
+
+                if (frm.Minutos == null)
+                    throw new Exception("Necessário informar o número de minutos do plano");
+
+                if (frm.FranquiaInternet == null)
+                    throw new Exception("Necessário informar o número da franquia de internet do plano");
+
+                if (frm.Valor == null)
+                    throw new Exception("Necessário informar o valor do plano");
+
+                if (frm.TipoPlanoId == null)
+                    throw new Exception("Necessário informar o tipo do plano que está sendo cadastrado");
+
+                if (frm.OperadoraId == null)
+                    throw new Exception("Necessário informar a operadora que esse plano pertence");
+
+                if (frm.DDD == null || frm.DDD.Count == 0)
+                    throw new Exception("Necessário informar a lista de DDD que o plano irá pertencer");
+
+                var plano = _planoRepository.Get(frm);
+
+                if (plano == null)
+                    throw new Exception("Plano não encontrado, verifique o plano que está tentando atualizar");
+
+                plano.Minutos = frm.Minutos;
+                plano.FranquiaInternet = frm.FranquiaInternet;
+                plano.Valor = frm.Valor;
+                plano.TipoPlanoId = frm.TipoPlanoId;
+                plano.OperadoraId = frm.OperadoraId;
+
+                var planosDDD = _planoDDDRepository.ListByPlano(new PlanoDDD.PlanoDDD() { PlanoId = plano.Id }).ToList();
+
+                foreach (var item in planosDDD)
+                {
+                    _planoDDDRepository.Delete(item);
+                }
+
+                var dddValido = new List<DDD.DDD>();
+
+                foreach (var ddd in frm.DDD)
+                {
+                    var item = _dDDRepository.GetByDDD(new DDD.DDD() { Codigo = ddd });
+
+                    if (item == null)
+                        throw new Exception($"DDD {ddd} inválido. Informar um código de área válido para cadastrar um plano");
+
+                    dddValido.Add(item);
+                }
+
+                _planoRepository.Update(plano);
+
+                foreach (var item in dddValido)
+                {
+                    _planoDDDRepository.Insert(new PlanoDDD.PlanoDDD()
+                    {
+                        DDDId = item.Id,
+                        PlanoId = frm.Id
+                    });
+                }
+
+                _context.Commit();
+
+                return frm;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "PlanoService - Update");
+                _context.RollBack();
+                throw ex;
+            }
         }
     }
 }
