@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telefonia.Test", "Telefonia
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telefonia.Domain", "Telefonia.Domain\Telefonia.Domain.csproj", "{AD17EBCA-ED12-437F-985A-C4363A11D4FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telefonia.Context", "Telefonia.Context\Telefonia.Context.csproj", "{999FF2A9-9D36-49A9-AED8-FB9FCA6B8A3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{AD17EBCA-ED12-437F-985A-C4363A11D4FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD17EBCA-ED12-437F-985A-C4363A11D4FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD17EBCA-ED12-437F-985A-C4363A11D4FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{999FF2A9-9D36-49A9-AED8-FB9FCA6B8A3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{999FF2A9-9D36-49A9-AED8-FB9FCA6B8A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{999FF2A9-9D36-49A9-AED8-FB9FCA6B8A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{999FF2A9-9D36-49A9-AED8-FB9FCA6B8A3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

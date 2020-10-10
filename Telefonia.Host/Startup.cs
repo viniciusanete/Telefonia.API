@@ -27,7 +27,7 @@ namespace Telefonia.Host
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<Telefonia.Infrastructure.Data.Config.IDbSettings, Telefonia.Infrastructure.Data.Config.DbSettings>((o) => new Telefonia.Infrastructure.Data.Config.DbSettings
+            services.AddSingleton<Telefonia.Context.Common.IDbSettings, Telefonia.Infrastructure.Data.Config.DbSettings>((o) => new Telefonia.Infrastructure.Data.Config.DbSettings
             {
                 ConnectionString = Configuration.GetValue<string>("ConnectionString")
             });

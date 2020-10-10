@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Telefonia.Infrastructure.Data.Config
+namespace Telefonia.Context.Common
 {
     public interface IDbSettings
     {
