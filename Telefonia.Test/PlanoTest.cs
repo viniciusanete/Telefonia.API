@@ -370,5 +370,75 @@ namespace Telefonia.Test
 
             #endregion
         }
+
+        [Test]
+        public async Task List()
+        {
+            var req = new Form();
+            req.Minutos = 100;
+            req.FranquiaInternet = 250;
+            req.Valor = 200.0M;
+            req.TipoPlanoId = 1;
+            req.OperadoraId = 1;
+            req.DDD = new List<int>() { 21, 11 };
+
+
+            #region Cadastrando um plano para listar
+
+            try
+            {
+                req = await _planoService.Insert(req);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail();
+            }
+
+            #endregion
+
+            #region Buscando por DDD null
+
+            try
+            {
+                var itms = await _planoService.List(null, null, null, null);
+                Assert.IsNotEmpty(itms);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(ex.Message, "DDD é um campo obrigatório para realizar a busca");
+            }
+
+            #endregion
+
+            #region Buscando por DDD invalido
+
+            try
+            {
+                var itms = await _planoService.List(1, null, null, null);
+                Assert.IsNotEmpty(itms);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(ex.Message, "DDD 1 inválido. Informe um campo de DDD válido");
+            }
+
+            #endregion
+
+            #region Buscando por DDD
+
+            try
+            {
+                var itms = await _planoService.List(21, null, null, null);
+                Assert.IsNotEmpty(itms);
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(ex.Message, "Plano não encontrado, verifique o plano que está tentando deletar");
+            }
+
+            #endregion
+
+            Assert.Pass();
+        }
     }
 }
