@@ -7,6 +7,6 @@ namespace Telefonia.Domain.Plano
 {
     public class Form : Plano
     {
-        List<int> DDD { get; set; }
+        public List<int> DDD { get; set; }
     }
 }

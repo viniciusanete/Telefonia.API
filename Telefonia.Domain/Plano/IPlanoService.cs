@@ -12,6 +12,6 @@ namespace Telefonia.Domain.Plano
         /// </summary>
         /// <param name="frm">Parametros com os dados completos do plano</param>
         /// <returns>Dados do plano inserido</returns>
-        Task<Form> Post(Form frm);
+        Task<Form> Insert(Form frm);
     }
 }

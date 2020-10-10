@@ -132,8 +132,7 @@ namespace Telefonia.Context.Context
             where TEntity : class
             where TKeyType : class
         {
-            _connection.Insert(entity, _transaction);
-            return entity;
+            return _connection.Get<TEntity>(_connection.Insert(entity, _transaction));
         }
 
         public TResult ExecuteScalar<TResult>(string sql, object parameters)

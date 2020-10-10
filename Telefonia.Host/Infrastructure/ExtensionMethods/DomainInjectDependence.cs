@@ -15,6 +15,10 @@ namespace Telefonia.Host.Infrastructure.ExtensionMethods
             services.AddTransient<Domain.Plano.IPlanoService, PlanoService>();
             services.AddTransient<Domain.Plano.IPlanoRepository, PlanoRepository>();
 
+            services.AddTransient<Domain.DDD.IDDDRepository, DDDRepository>();
+            
+            services.AddTransient<Domain.PlanoDDD.IPlanoDDDRepository, PlanoDDDRepository>();
+
             services.AddScoped<Telefonia.Context.Context.IContext, Telefonia.Context.Context.Context>();
 
             /*Logger*/

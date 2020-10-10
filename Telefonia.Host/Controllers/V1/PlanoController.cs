@@ -16,5 +16,13 @@ namespace Telefonia.Host.Controllers.V1
         {
             _planoService = planoService ?? throw new ArgumentNullException(nameof(planoService));
         }
+
+        [HttpPost]
+        [Route("insert")]
+        public async Task<IActionResult> Insert([FromBody]Form form)
+        {
+            return Ok(await _planoService.Insert(form));
+        }
+
     }
 }
