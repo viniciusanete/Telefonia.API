@@ -37,5 +37,13 @@ namespace Telefonia.Host.Controllers.V1
         {
             return Ok(await _planoService.List(DDD, tipoPlanoId, operadoraId, planoId));
         }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> Delete([FromQuery] int? id)
+        {
+            await _planoService.Delete(id);
+            return Ok();
+        }
     }
 }

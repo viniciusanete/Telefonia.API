@@ -27,7 +27,7 @@ namespace Telefonia.Domain.Services
             _context = _planoRepository.Context = _dDDRepository.Context = _planoDDDRepository.Context;
         }
 
-        public async Task<Form> Insert(Form frm)
+        public Task<Form> Insert(Form frm)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Telefonia.Domain.Services
 
                 _context.Commit();
 
-                return frm;
+                return Task.FromResult(frm);
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace Telefonia.Domain.Services
             }
         }
 
-        public async Task<Form> Update(Form frm)
+        public Task<Form> Update(Form frm)
         {
             try
             {
@@ -159,7 +159,7 @@ namespace Telefonia.Domain.Services
 
                 _context.Commit();
 
-                return frm;
+                return Task.FromResult(frm);
             }
             catch (Exception ex)
             {
@@ -169,7 +169,7 @@ namespace Telefonia.Domain.Services
             }
         }
 
-        public async Task<List<Plano.List>> List(int? DDD, int? tipoPlanoId, int? operadoraId, int? planoId)
+        public Task<List<Plano.List>> List(int? DDD, int? tipoPlanoId, int? operadoraId, int? planoId)
         {
             try
             {
@@ -210,11 +210,34 @@ namespace Telefonia.Domain.Services
                     result.Add(item);
                 }
 
-                return result;
+                return Task.FromResult(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "PlanoService - List");
+                throw ex;
+            }
+        }
+
+        public Task Delete(int? Id)
+        {
+            try
+            {
+                if (Id == null)
+                    throw new Exception("Identificador obrigatório");
+
+                var plano = _planoRepository.Get(new Plano.Plano() { Id = (int)Id});
+
+                if (plano == null)
+                    throw new Exception("Plano não encontrado, verifique o plano que está tentando deletar");
+
+                _planoRepository.Delete(plano);
+
+                return Task.CompletedTask;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "PlanoService - Delete");
                 throw ex;
             }
         }
