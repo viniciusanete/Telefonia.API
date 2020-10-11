@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.Swagger;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -12,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Telefonia.Host.Infrastructure.ExtensionMethods;
+using Microsoft.OpenApi.Models;
 
 namespace Telefonia.Host
 {
@@ -50,6 +49,19 @@ namespace Telefonia.Host
             });
 
             services.AddMvc();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Cadastro de Plano de Telefonia",
+                        Version = "v1",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Vinicius Meireles Anete"
+                        }
+                    });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -74,6 +86,12 @@ namespace Telefonia.Host
             {
                 Predicate = r => r.Name.Contains("self")
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cadastro de Plano de Telefonia V1");
+            });
+
 
             Telefonia.Infrastructure.Data.Repository.RegisterMappings.Register();
 

@@ -21,3 +21,6 @@ Para listagem:
 - Métodos de testes criados, testando casos de validações de dados e sucesso.
 
 Segue dentro da pasta "@Arquivos", uma imagem referente a modelagem do banco de dados.
+
+- Swagger disponibilizado na aplicação acessando através do link:
+    - /swagger/index.html
